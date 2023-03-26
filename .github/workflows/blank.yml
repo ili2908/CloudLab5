@@ -65,5 +65,5 @@ jobs:
           context: .
           file: ./Dockerfile
           push: true
-          tags: ${{ secrets.DOCKERHUB_USERNAME }}/CloudLab5:latest
+          tags: ${{ secrets.DOCKERHUB_USERNAME }}/cloudlab5:latest
 
