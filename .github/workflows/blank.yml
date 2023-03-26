@@ -83,5 +83,5 @@ jobs:
         uses: nick-fields/assert-action@v1
         with:
           expected: 200
-          actual: ${{ steps.curling.outputs.value.result }}
+          actual: ${{ steps.curling.outputs.result }}
         
