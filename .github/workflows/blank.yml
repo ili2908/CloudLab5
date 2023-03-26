@@ -66,8 +66,8 @@ jobs:
           push: true
           tags: ilkovale/cloudlab5:latest
   pull-and-check: 
-    if: ${{ always() && contains(join(needs.*.result, ','), 'success') }}
-    needs: [build-and-push]
+    #if: ${{ always() && contains(join(needs.*.result, ','), 'success') }}
+    #needs: [build-and-push]
     name: pull-and-check
     runs-on: ubuntu-latest
     services:
@@ -78,7 +78,7 @@ jobs:
     steps:
       - name: docker
         id: curling
-        run: curl -s -o /dev/null -w "%{http_code}" localhost
+        run: curl -s -o /dev/null -w "%{http_code}" localhost >> $GITHUB_OUTPUT
       - name: assertions
         uses: nick-fields/assert-action@v1
         with:
