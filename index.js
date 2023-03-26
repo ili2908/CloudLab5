@@ -7,6 +7,5 @@ http.createServer((_, res) => {
   res.setHeader('Content-Type', 'text/plain');
   res.end('Ok');
 }).listen(PORT, () => {
-
   console.log(`app listening on port ${PORT}`);
 });
