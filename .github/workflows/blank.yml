@@ -66,8 +66,8 @@ jobs:
           push: true
           tags: ilkovale/cloudlab5:latest
   pull-and-check: 
-    #if: ${{ always() && contains(join(needs.*.result, ','), 'success') }}
-    #needs: [build-and-push]
+    if: ${{ always() && contains(join(needs.*.result, ','), 'success') }}
+    needs: [build-and-push]
     name: pull-and-check
     runs-on: ubuntu-latest
     services:
