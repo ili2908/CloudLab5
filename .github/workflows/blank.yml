@@ -78,10 +78,10 @@ jobs:
     steps:
       - name: docker
         id: curling
-        run: curl -s -o /dev/null -w "%{http_code}" localhost >> $GITHUB_OUTPUT
+        run: echo "result=$(curl -s -o /dev/null -w "%{http_code}" localhost)" >> $GITHUB_OUTPUT
       - name: assertions
         uses: nick-fields/assert-action@v1
         with:
           expected: 200
-          actual: ${{ steps.curling.outputs.value }}
+          actual: ${{ steps.curling.outputs.value.result }}
         
