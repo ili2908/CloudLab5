@@ -42,6 +42,8 @@ jobs:
           auto_fix: false
           commit: false
   build:
+    if: ${{ always() && contains(join(needs.*.result, ','), 'success') }}
+    needs: [run-linters]
     runs-on: ubuntu-latest
     steps:
       -
@@ -63,5 +65,5 @@ jobs:
           context: .
           file: ./Dockerfile
           push: true
-          tags: ${{ secrets.DOCKERHUB_USERNAME }}/clockbox:latest
+          tags: ${{ secrets.DOCKERHUB_USERNAME }}/CloudLab5:latest
 
