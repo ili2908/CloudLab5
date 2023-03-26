@@ -28,8 +28,6 @@ jobs:
         with:
           node-version: 12
         
-
-      # ESLint and Prettier must be in `package.json`
       - name: Install Node.js dependencies
         run: npm ci
         
@@ -41,7 +39,7 @@ jobs:
           continue_on_error: false
           auto_fix: false
           commit: false
-  build:
+  build-and-push:
     if: ${{ always() && contains(join(needs.*.result, ','), 'success') }}
     needs: [run-linters]
     runs-on: ubuntu-latest
@@ -61,9 +59,25 @@ jobs:
       -
         name: Build and push
         uses: docker/build-push-action@v4
+        #it will not push unless build is succesful
         with:
           context: .
           file: ./Dockerfile
           push: true
           tags: ${{ secrets.DOCKERHUB_USERNAME }}/cloudlab5:latest
-
+  pull-and-check: 
+    if: ${{ always() && contains(join(needs.*.result, ','), 'success') }}
+    needs: [build-and-push]
+    name: pull-and-check
+    runs-on: ubuntu-latest
+    services:
+      myDocker:
+        image: ghcr.io/${{ secrets.DOCKERHUB_USERNAME }}/cloudlab5:latest
+        credentials:
+            username: ${{ secrets.DOCKERHUB_USERNAME }}
+            password: ${{  secrets.DOCKER_CONTAINER_REGISTRY_TOKEN }}
+        ports:
+        - 80:80
+    steps:
+      - name: docker
+        run: curl localhost
