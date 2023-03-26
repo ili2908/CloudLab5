@@ -39,3 +39,7 @@ jobs:
         with:
           eslint: true
           prettier: true
+          continue_on_error: false
+          auto_fix: false
+          commit: false
+
